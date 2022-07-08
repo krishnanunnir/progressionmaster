@@ -1,6 +1,7 @@
 import string
 from bs4 import BeautifulSoup
 import requests
+import json
 
 
 def parseAmazonDetails(url: string):
@@ -69,9 +70,47 @@ def parseGoodreadsDetail(url: string):
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")
     try:
+        name = soup.find("span", attrs={"itemprop": "name"}).text.strip()
         rating = soup.find("span", attrs={"itemprop": "ratingValue"}).text.strip()
         ratings_count = soup.find("meta", attrs={"itemprop": "ratingCount"}).text
     except Exception as ex:
         print("couldn't parse the data" + ex)
         return None
-    return (rating, ratings_count)
+    return (name, rating, ratings_count)
+
+
+def parseGoodreadsSeriesDetail(url: string, series):
+
+    HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
+        "Accept-Language": "en-US, en;q=0.5",
+    }
+
+    webpage = requests.get(url, headers=HEADERS)
+    soup = BeautifulSoup(webpage.content, "lxml")
+    books_list = []
+    try:
+        all_books_element = soup.find_all(
+            "div", attrs={"data-react-class": "ReactComponents.SeriesList"}
+        )
+        for book_element in all_books_element:
+
+            series_props = book_element.attrs.get("data-react-props")
+            series_json_data = json.loads(series_props)
+            for book_all_data in series_json_data["series"]:
+                book = book_all_data["book"]
+                book_instance = {}
+                book_instance["name"] = book["title"]
+                book_instance["description"] = book["description"]["html"]
+                book_instance["author"] = book["author"]["name"]
+                book_instance["goodreads_rating"] = book["avgRating"]
+                book_instance["series"] = series
+                book_instance[
+                    "goodreads_link"
+                ] = f"https://www.goodreads.com{book['bookUrl']}"
+                books_list.append(book_instance)
+
+    except Exception as ex:
+        print("couldn't parse the data" + ex)
+        return None
+    return books_list
