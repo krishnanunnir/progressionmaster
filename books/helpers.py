@@ -13,22 +13,23 @@ def parseAmazonDetails(url: string):
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")
     try:
-        title = soup.find("span", attrs={"id": "productTitle"})
-        title_value = title.string
+        title_element = soup.find("span", attrs={"id": "productTitle"})
+        title_string = title_element.string
+        title = title_string.strip().replace(",", "")
 
-        title_string = title_value.strip().replace(",", "")
-        description_html = soup.find("div", attrs={"id": "bookDescription_feature_div"})
-        description = description_html.text
+        description_element = soup.find(
+            "div", attrs={"id": "bookDescription_feature_div"}
+        )
+        description = description_element.text
 
-        rating_text = soup.find(
+        rating_element = soup.find(
             "span", attrs={"class": "reviewCountTextLinkedHistogram"}
         )
-        rating = rating_text.attrs.get("title").strip().split(" ")[0]
-        number_of_rating_element = soup.find(
-            "span", attrs={"id": "acrCustomerReviewText"}
-        )
-        number_of_rating = number_of_rating_element.text.split(" ")[0]
-        is_kindle_unlimited = (
+        rating = rating_element.attrs.get("title").strip().split(" ")[0]
+
+        ratings_count_elment = soup.find("span", attrs={"id": "acrCustomerReviewText"})
+        ratings_count = ratings_count_elment.text.split(" ")[0]
+        has_kindle_unlimited = (
             True
             if soup.find("i", attrs={"class": "a-icon-kindle-unlimited"})
             else False
@@ -36,22 +37,23 @@ def parseAmazonDetails(url: string):
         has_audiobook = (
             True if soup.find("span", attrs={"class": "audible_mm_title"}) else False
         )
-        cover_image = soup.find("img", attrs={"id": "ebooksImgBlkFront"})
-        cover_image_url = cover_image.attrs.get("src")
-        author = soup.find("a", attrs={"class": "contributorNameID"})
-        author_value = author.string
+        cover_image_element = soup.find("img", attrs={"id": "ebooksImgBlkFront"})
+        cover_image_url = cover_image_element.attrs.get("src")
 
-        author_string = author_value.strip().replace(",", "")
+        author_element = soup.find("a", attrs={"class": "contributorNameID"})
+        author_string = author_element.string
+        author = author_string.strip().replace(",", "")
+
     except Exception as ex:
         print("couldn't parse the data" + ex)
         return None
     return (
-        title_string,
-        author_string,
+        title,
+        author,
         description,
         rating,
-        number_of_rating,
-        is_kindle_unlimited,
+        ratings_count,
+        has_kindle_unlimited,
         has_audiobook,
         cover_image_url,
     )
@@ -68,8 +70,8 @@ def parseGoodreadsDetail(url: string):
     soup = BeautifulSoup(webpage.content, "lxml")
     try:
         rating = soup.find("span", attrs={"itemprop": "ratingValue"}).text.strip()
-        number_of_rating = soup.find("meta", attrs={"itemprop": "ratingCount"}).text
+        ratings_count = soup.find("meta", attrs={"itemprop": "ratingCount"}).text
     except Exception as ex:
         print("couldn't parse the data" + ex)
         return None
-    return (rating, number_of_rating)
+    return (rating, ratings_count)
