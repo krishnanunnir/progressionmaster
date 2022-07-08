@@ -8,7 +8,7 @@ from django.core.files import File
 class BookSeries(models.Model):
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    goodreads_url = models.URLField()
+    goodreads_link = models.URLField()
 
 
 class Book(models.Model):
