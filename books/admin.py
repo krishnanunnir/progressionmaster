@@ -17,13 +17,13 @@ class BookAdmin(admin.ModelAdmin):
                 has_audiobook,
                 cover_image_url,
             ) = parseAmazonDetails(book.amazon_link)
-            book.update(
-                title=title_string,
-                author=author_string,
-                has_kindle_unlimited=is_kindle_unlimited,
-                has_audiobook=has_audiobook,
-                cover_image_url=cover_image_url,
-            )
+
+            book.name = title_string
+            book.author = author_string
+            book.has_kindle_unlimited = is_kindle_unlimited
+            book.has_audiobook = has_audiobook
+            book.cover_image_url = cover_image_url
+            book.save()
 
     update_from_amazon.short_description = "Update from Amazon"
 

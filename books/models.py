@@ -1,5 +1,6 @@
 from django.db import models
-import urllib.request
+from urllib.request import urlopen
+from tempfile import NamedTemporaryFile
 from django.core.exceptions import ValidationError
 from django.core.files import File
 import os
@@ -31,17 +32,16 @@ class Book(models.Model):
 
     def get_remote_image(self):
         if self.cover_image_url and not self.cover_image:
-            result = urllib.request.urlretrieve(self.cover_image_url)
-            self.cover_image.save(
-                os.path.basename(self.cover_image_url), File(open(result[0]))
-            )
-            self.save()
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(self.cover_image_url).read())
+            img_temp.flush()
+            self.cover_image.save(f"image_{self.pk}.jpg", File(img_temp))
 
     def clean(self):
         if not self.amazon_link or self.goodreads_link:
             raise ValidationError("You must specify either amazon or goodreads link")
 
     def save(self, *args, **kwargs):
-        if getattr(self, "_cover_image_url_changed", True):
-            self.cover_image = self.get_remote_image()
+        if getattr(self, "_cover_cover_image_url_changed", True):
+            self.get_remote_image()
         super(Book, self).save(*args, **kwargs)
