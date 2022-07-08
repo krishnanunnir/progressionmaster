@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% block headers %}
+	<link rel="stylesheet" href="{% static 'css/books.css'%}">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+			{% include "_book.html"%}
+    </div>
+{% endblock %}
