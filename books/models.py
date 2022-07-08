@@ -38,7 +38,7 @@ class Book(models.Model):
             self.cover_image.save(f"image_{self.pk}.jpg", File(img_temp))
 
     def clean(self):
-        if not self.amazon_link or self.goodreads_link:
+        if not self.amazon_link or not self.goodreads_link:
             raise ValidationError("You must specify either amazon or goodreads link")
 
     def save(self, *args, **kwargs):
