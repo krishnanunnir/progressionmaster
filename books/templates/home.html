@@ -5,6 +5,8 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
+        {% for book in books %}
 			{% include "_book.html"%}
+        {% endfor %}
     </div>
 {% endblock %}
