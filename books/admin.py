@@ -11,29 +11,29 @@ class BookAdmin(admin.ModelAdmin):
     def update_from_amazon(self, request, queryset):
         for book in queryset:
             (
-                title_string,
-                author_string,
+                title,
+                author,
                 description,
                 rating,
-                number_of_rating,
-                is_kindle_unlimited,
+                ratings_count,
+                has_kindle_unlimited,
                 has_audiobook,
                 cover_image_url,
             ) = parseAmazonDetails(book.amazon_link)
 
-            book.name = title_string
-            book.author = author_string
+            book.author = author
             book.description = description
             book.amazon_rating = rating
-            book.has_kindle_unlimited = is_kindle_unlimited
+            book.has_kindle_unlimited = has_kindle_unlimited
             book.has_audiobook = has_audiobook
             book.cover_image_url = cover_image_url
             book.save()
 
     def update_from_goodreads(self, request, queryset):
         for book in queryset:
-            rating, no_of_rating = parseGoodreadsDetail(book.goodreads_link)
+            name, rating, no_of_rating = parseGoodreadsDetail(book.goodreads_link)
             book.goodreads_rating = rating
+            book.name = name
             book.save()
 
     def update_all_fields(self, request, queryset):
