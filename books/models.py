@@ -3,12 +3,12 @@ from urllib.request import urlopen
 from tempfile import NamedTemporaryFile
 from django.core.exceptions import ValidationError
 from django.core.files import File
-import os
 
 
 class BookSeries(models.Model):
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
+    goodreads_url = models.URLField()
 
 
 class Book(models.Model):
