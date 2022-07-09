@@ -2,6 +2,9 @@ import string
 from bs4 import BeautifulSoup
 import requests
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def parseAmazonDetails(url: string):
@@ -46,18 +49,20 @@ def parseAmazonDetails(url: string):
         author = author_string.strip().replace(",", "")
 
     except Exception as ex:
-        print("couldn't parse the data" + ex)
+        logger.error(f"Parsing the data failled for {url}")
+        logger.error(f"other data:\n url: {webpage.url}")
+        logger.exception("message")
+
         return None
-    return (
-        title,
-        author,
-        description,
-        rating,
-        ratings_count,
-        has_kindle_unlimited,
-        has_audiobook,
-        cover_image_url,
-    )
+
+    book = {
+        "amazon_link": webpage.url.rsplit("/", 1)[0],
+        "amazon_rating": rating,
+        "has_kindle_unlimited": has_kindle_unlimited,
+        "has_audiobook": has_audiobook,
+        "cover_image_url": cover_image_url,
+    }
+    return book
 
 
 def parseGoodreadsDetail(url: string):
@@ -70,13 +75,27 @@ def parseGoodreadsDetail(url: string):
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")
     try:
-        name = soup.find("span", attrs={"itemprop": "name"}).text.strip()
-        rating = soup.find("span", attrs={"itemprop": "ratingValue"}).text.strip()
-        ratings_count = soup.find("meta", attrs={"itemprop": "ratingCount"}).text
+        share_element = soup.find(
+            "div", attrs={"data-react-class": "ReactComponents.ShareDialog"}
+        )
+        book_props = json.loads(share_element.attrs.get("data-react-props"))[
+            "previewData"
+        ]
+        rating = book_props["rating"]
+        ratings_count = book_props["ratingsCount"]
+
+        amazon_link_element = soup.find("a", attrs={"id": "buyButton"})
+        amazon_link = amazon_link_element.attrs.get("href")
     except Exception as ex:
-        print("couldn't parse the data" + ex)
-        return None
-    return (name, rating, ratings_count)
+        logger.error(f"Parsing the data failled for {url}")
+        logger.exception("message")
+        logger.error(f"other data:\n url: {webpage.url}")
+        return (None, None, None)
+    return (
+        rating,
+        ratings_count,
+        f"https://www.goodreads.com{amazon_link}",
+    )
 
 
 def parseGoodreadsSeriesDetail(url: string, series):

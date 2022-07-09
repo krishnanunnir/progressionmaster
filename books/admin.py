@@ -16,43 +16,41 @@ class BookAdmin(admin.ModelAdmin):
 
     def update_from_amazon(self, request, queryset):
         for book in queryset:
-            (
-                title,
-                author,
-                description,
-                rating,
-                ratings_count,
-                has_kindle_unlimited,
-                has_audiobook,
-                cover_image_url,
-            ) = parseAmazonDetails(book.amazon_link)
-
-            book.amazon_rating = rating
-            book.has_kindle_unlimited = has_kindle_unlimited
-            book.has_audiobook = has_audiobook
-            book.cover_image_url = cover_image_url
+            book_dict = parseAmazonDetails(book.amazon_link)
+            book.amazon_rating = book_dict["amazon_rating"]
+            book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
+            book.has_audiobook = book_dict["has_audiobook"]
+            book.cover_image_url = book_dict["cover_image_url"]
             book.save()
 
     def update_from_goodreads(self, request, queryset):
         for book in queryset:
-            name, rating, no_of_rating = parseGoodreadsDetail(book.goodreads_link)
-            book.goodreads_rating = rating
-            book.name = name
+            amazon_link = None
+            if book.goodreads_link:
+                rating, no_of_rating, amazon_link = parseGoodreadsDetail(
+                    book.goodreads_link
+                )
+            if amazon_link:
+                book_dict = parseAmazonDetails(amazon_link)
+                book.amazon_link = book_dict["amazon_link"]
+                book.amazon_rating = book_dict["amazon_rating"]
+                book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
+                book.has_audiobook = book_dict["has_audiobook"]
+                book.cover_image_url = book_dict["cover_image_url"]
+            if not book.goodreads_rating:
+                book.goodreads_rating = rating
+            if not book.amazon_rating:
+                book.amazon_rating
             book.save()
-
-    def update_all_fields(self, request, queryset):
-        self.update_from_amazon(request, queryset)
-        self.update_from_goodreads(request, queryset)
 
     update_from_amazon.short_description = "Update from Amazon"
     update_from_goodreads.short_description = "Update from goodreads"
-    update_all_fields.short_description = "Update all fields"
     has_goodreads_link.boolean = True
     has_amazon_link.boolean = True
 
     list_display = ("name", "has_goodreads_link", "has_amazon_link")
 
-    actions = ["update_from_amazon", "update_from_goodreads", "update_all_fields"]
+    actions = ["update_from_amazon", "update_from_goodreads"]
 
 
 admin.site.register(Book, BookAdmin)

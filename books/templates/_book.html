@@ -3,52 +3,49 @@
     <div class="col-md-8 offset-md-2 mt-5">
         <div class="d-flex justify-content-between">
             <div id="coverimage" class="d-flex flex-column">
-				<img class="vertical-align" width="200" src="/media/{{book.cover_image}}">
+                <div class="d-flex flex-row">
+                    <img class="vertical-align" width="200" src="/media/{{book.cover_image}}">
+                </div>
+                <div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+                    {% if book.amazon_link %}
+                        <a href="{{book.amazon_link}}">
+                            <span class="amazon-button px-4">
+                                Amazon ({{book.amazon_rating}})
+                            </span>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+                    {% if book.goodreads_link %}
+                        <a href="{{book.goodreads_link}}">
+                            <span class="goodreads-button px-4">
+                                Goodreads ({{book.goodreads_rating}})
+                            </span>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+                    {% if book.read_online_link %}
+                        <a href="{{book.read_online_link}}">
+                            <span class="read-online-button px-5">
+                                Read Online
+                            </span>
+                        </a>
+                    {% endif %}
+                </div>
+
             </div>
             <div id="details" class="d-flex flex-column ml-4">
-				<div class="d-flex flex-row">
-					<h4>{{book.name}}</h4>
-				</div>
-				<!-- <div class="d-flex flex-row mt-2">
+                <div class="d-flex flex-row">
+                    <h4>{{book.name}}</h4>
+                </div>
+                <!-- <div class="d-flex flex-row mt-2">
 					<span class="badge badge-dark">Psychic</span>
 				</div> -->
-				<div class=" mt-2">
-					{{book.description| safe }}
-				</div>
+                <div class=" mt-2">
+                    {{book.description| safe }}
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-8 offset-md-2 mt-3">
-		<div class="d-flex flex-row justify-content-between">
-			{% if book.read_online_link %}
-			<a href="{{book.read_online_link}}">
-			<div class="d-flex flex-column flex-1">
-				<span class="read-online-button px-4">
-					Read Online
-				</span>
-			</div>
-		</a>
-		{% endif %}
-		{% if book.goodreads_link %}
-		<a href="{{book.goodreads_link}}">
-			<div class="d-flex flex-column flex-1">
-				<span class="goodreads-button px-4">
-					Goodreads
-				</span>
-			</div>
-			</a>
-			{% endif %}
-			{% if book.amazon_link %}
-			<a href="{{book.amazon_link}}">
-			<div class="d-flex flex-column flex-1">
-				<span class="amazon-button px-4">
-					Amazon
-				</span>
-			</div>
-			</a>
-			{% endif %}
-		</div>
-	</div>
 </div>
