@@ -37,3 +37,14 @@
 .goodreads-hyperlink:hover {
   text-decoration: none;
 }
+
+.hide-image {
+  display: none;
+}
+
+.hide-amazon-rated-above-4,
+.hide-goodreads-rated-above-4,
+.hide-has-kindle-unlimited,
+.hide-has-audiobook {
+  display: none;
+}

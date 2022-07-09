@@ -2,7 +2,10 @@
 {% load static %}
 {% block headers %}
 	<link rel="stylesheet" href="{% static 'css/books.css'%}">
+    <link rel="stylesheet" href="{% static 'css/filter_nav.css'%}">
+    <script src="{% static 'js/filter.js' %}"></script>
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    
 {% endblock %}
 {% block content %}
     <div class="container-fluid">

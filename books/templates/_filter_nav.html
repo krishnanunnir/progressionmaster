@@ -11,36 +11,37 @@
                 </select>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter">
+                <a href="#" class="hyperlink-filter" id="amazonratingfilter" onclick="filterRatingAbove4Amazon(this.id)">
                     <span class="vertical-align"> 
-                        <img width="16" src="{% static 'image/check.svg' %}" class="tick-img" style="display: none;" />
-                        <img width="16" src="{% static 'image/x.svg' %}" class="close-img" />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/x.svg' %}"   />
                         4 star and above Amazon
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter">
+                <a href="#" class="hyperlink-filter" id="goodreadsratingfilter" onclick="filterRatingAbove4Goodreads(this.id)">
                     <span class="vertical-align">
-                    <img width="16" src="{% static 'image/x.svg' %}" class="state-img" />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/x.svg' %}"   />
                         4 star and above Goodreads
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter">
+                <a href="#" class="hyperlink-filter" id="kindleunlimitedfilter" onclick="filterKindleUnlimited(this.id)">
                     <span class="vertical-align">
-                    <img width="16" src="{% static 'image/check.svg' %}" class="tick-img" style="display: none;" />
-                    <img width="16" src="{% static 'image/x.svg' %}" class="close-img" />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/x.svg' %}"   />
                         Kindle Unlimited Available
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter">
+                <a href="#" class="hyperlink-filter" id="audiblefilter" onclick="filterAudible(this.id)">
                     <span class="vertical-align">
-                    <img width="16" src="{% static 'image/check.svg' %}" class="tick-img" style="display: none;" />
-                    <img width="16" src="{% static 'image/x.svg' %}" class="close-img" />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/x.svg' %}"   />
                         Audible Available
                     </span>
                 </a>

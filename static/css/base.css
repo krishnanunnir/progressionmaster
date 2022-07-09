@@ -1,11 +1,11 @@
 body {
-    background-color: #C7D2FE !important;
+  background-color: #c7d2fe !important;
 }
 
 .vertical-align {
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
