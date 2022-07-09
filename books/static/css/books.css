@@ -30,3 +30,10 @@
 .name-series-hyperlink:hover {
   color: black;
 }
+
+.amazon-hyperlink:hover {
+  text-decoration: none;
+}
+.goodreads-hyperlink:hover {
+  text-decoration: none;
+}

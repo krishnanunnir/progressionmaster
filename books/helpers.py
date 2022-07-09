@@ -66,6 +66,7 @@ def parseAmazonDetails(url: string):
         "amazon_link": webpage.url.rsplit("/", 1)[0],
         "amazon_rating": rating,
         "has_kindle_unlimited": has_kindle_unlimited,
+        "amazon_rating_count": int(ratings_count.replace(",", "")),
         "has_audiobook": has_audiobook,
         "cover_image_url": cover_image_url,
     }
@@ -144,6 +145,7 @@ def parseGoodreadsSeriesDetail(url: string, series):
                     if book.get("bookUrl")
                     else None
                 )
+                book_instance["goodreads_rating_count"] = book.get("ratingsCount", None)
                 books_list.append(book_instance)
 
     except Exception as ex:

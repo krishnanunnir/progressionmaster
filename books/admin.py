@@ -35,6 +35,7 @@ class BookAdmin(admin.ModelAdmin):
             if book_dict:
                 book.amazon_link = book_dict["amazon_link"]
                 book.amazon_rating = book_dict["amazon_rating"]
+                book.amazon_rating_count = book_dict["amazon_rating_count"]
                 book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
                 book.has_audiobook = book_dict["has_audiobook"]
                 book.cover_image_url = book_dict["cover_image_url"]
@@ -52,10 +53,12 @@ class BookAdmin(admin.ModelAdmin):
                 )
             if amazon_link:
                 book.amazon_link = amazon_link
-            if not book.goodreads_rating:
+            if rating:
                 book.goodreads_rating = rating
-            if not book.book_number:
+            if book_number:
                 book.book_number = book_number
+            if no_of_rating:
+                book.goodreads_rating_count = no_of_rating
             book.save()
             logger.info(f"Updated {book} from goodreads")
 
@@ -70,11 +73,13 @@ class BookAdmin(admin.ModelAdmin):
                 book_dict = parseAmazonDetails(amazon_link)
                 book.amazon_link = book_dict["amazon_link"]
                 book.amazon_rating = book_dict["amazon_rating"]
+                book.amazon_rating_count = book_dict["amazon_rating_count"]
                 book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
                 book.has_audiobook = book_dict["has_audiobook"]
                 book.cover_image_url = book_dict["cover_image_url"]
-            if not book.goodreads_rating:
+            if rating:
                 book.goodreads_rating = rating
+                book.goodreads_rating_count = no_of_rating
             book.book_number = book_number
             book.save()
             logger.info(f"Updated {book} with max data")
