@@ -18,13 +18,12 @@ def parseAmazonDetails(url: string):
     soup = BeautifulSoup(webpage.content, "lxml")
     try:
         title_element = soup.find("span", attrs={"id": "productTitle"})
-        title_string = title_element.string
-        title = title_string.strip().replace(",", "")
+        title = title_element.string.strip().replace(",", "") if title_element else None
 
         description_element = soup.find(
             "div", attrs={"id": "bookDescription_feature_div"}
         )
-        description = description_element.text
+        description = description_element.text if description_element else None
 
         rating_element = soup.find(
             "span", attrs={"class": "reviewCountTextLinkedHistogram"}
@@ -48,15 +47,17 @@ def parseAmazonDetails(url: string):
             True if soup.find("span", attrs={"class": "audible_mm_title"}) else False
         )
         cover_image_element = soup.find("img", attrs={"id": "ebooksImgBlkFront"})
-        cover_image_url = cover_image_element.get("src")
+        cover_image_url = (
+            cover_image_element.get("src") if cover_image_element else None
+        )
 
         author_element = soup.find("a", attrs={"class": "contributorNameID"})
-        author_string = author_element.string
-        author = author_string.strip().replace(",", "")
+        author = (
+            author_element.string.strip().replace(",", "") if author_element else None
+        )
 
     except Exception as ex:
         logger.error(f"Parsing the data failled for {url}")
-        logger.error(f"other data:\n url: {webpage.url}")
         logger.exception("message")
 
         return None
@@ -89,17 +90,23 @@ def parseGoodreadsDetail(url: string):
         )
         rating = book_props.get("rating")
         ratings_count = book_props.get("ratingsCount")
+        series_element = soup.find("h2", attrs={"id": "bookSeries"})
+        book_number = (
+            series_element.text.split(" ")[-1].lstrip("#").rstrip(")\n")
+            if series_element
+            else None
+        )
 
         amazon_link_element = soup.find("a", attrs={"id": "buyButton"})
         amazon_link = amazon_link_element.get("href")
     except Exception as ex:
         logger.error(f"Parsing the data failled for {url}")
         logger.exception("message")
-        logger.error(f"other data:\n url: {webpage.url}")
-        return (None, None, None)
+        return (None, None, None, None)
     return (
         rating,
         ratings_count,
+        book_number,
         f"https://www.goodreads.com{amazon_link}",
     )
 
@@ -140,6 +147,7 @@ def parseGoodreadsSeriesDetail(url: string, series):
                 books_list.append(book_instance)
 
     except Exception as ex:
-        print("couldn't parse the data" + ex)
+        logger.error(f"Parsing the data failled for {url}")
+        logger.exception("message")
         return None
     return books_list

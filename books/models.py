@@ -42,6 +42,9 @@ class Book(models.Model):
             raise ValidationError("You must specify either amazon or goodreads link")
 
     def save(self, *args, **kwargs):
-        if getattr(self, "_cover_cover_image_url_changed", True):
+        if (
+            getattr(self, "_cover_cover_image_url_changed", True)
+            and self.cover_image_url
+        ):
             self.get_remote_image()
         super(Book, self).save(*args, **kwargs)

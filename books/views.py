@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.views import View
 
 from books.models import Book
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class BookView(View):
