@@ -1,0 +1,9 @@
+1. add ratings count to database - x
+2. add filters - x
+3. add search - not implementing
+4. add title - x
+5. add serializer to share build bot
+
+Future
+1. avoid duplicate entries
+2. periodic task to update the entries
