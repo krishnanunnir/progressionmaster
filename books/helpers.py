@@ -130,9 +130,9 @@ def parseGoodreadsSeriesDetail(url: string, series):
             series_props = book_element.get("data-react-props")
             series_json_data = json.loads(series_props)
             for book_all_data in series_json_data["series"]:
+                book = book_all_data["book"]
                 if book.get("textReviewsCount", 0) == 0:
                     continue
-                book = book_all_data["book"]
                 book_instance = {}
                 book_instance["name"] = book.get("title")
                 book_instance["description"] = book.get("description", {}).get("html")
