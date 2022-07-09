@@ -50,7 +50,7 @@ class BookAdmin(admin.ModelAdmin):
                 rating, no_of_rating, book_number, amazon_link = parseGoodreadsDetail(
                     book.goodreads_link
                 )
-            if not book.amazon_link and amazon_link:
+            if amazon_link:
                 book.amazon_link = amazon_link
             if not book.goodreads_rating:
                 book.goodreads_rating = rating
