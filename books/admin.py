@@ -14,6 +14,19 @@ class BookAdmin(admin.ModelAdmin):
     def has_amazon_link(self, instance):
         return True if instance.amazon_link else False
 
+    def can_be_public(self, instance):
+        if all(
+            [
+                instance.amazon_link,
+                instance.goodreads_link,
+                instance.description,
+                instance.name,
+                instance.author,
+            ]
+        ):
+            return True
+        return False
+
     def update_from_amazon(self, request, queryset):
         for book in queryset:
             book_dict = parseAmazonDetails(book.amazon_link)
@@ -47,8 +60,9 @@ class BookAdmin(admin.ModelAdmin):
     update_from_goodreads.short_description = "Update from goodreads"
     has_goodreads_link.boolean = True
     has_amazon_link.boolean = True
+    can_be_public.boolean = True
 
-    list_display = ("name", "has_goodreads_link", "has_amazon_link")
+    list_display = ("name", "has_goodreads_link", "has_amazon_link", "can_be_public")
 
     actions = ["update_from_amazon", "update_from_goodreads"]
 
