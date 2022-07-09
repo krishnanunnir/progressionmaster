@@ -4,43 +4,43 @@
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
 
-                <select name="order" class="custom-select"  hx-get="?only_item=true" hx-target="#books"  >
+                <select name="order" id="orderSelect" class="custom-select"  hx-get="?only_item=true" hx-target="#books" >
                     <option selected disabled>Sort by</option>
                     <option value="amazon_rating">Amazon Rating</option>
                     <option value="goodreads_rating">Goodreads Rating</option>
                 </select>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" id="amazonratingfilter" onclick="filterRatingAbove4Amazon(this.id)">
+                <a href="#" class="hyperlink-filter" data-state="false" id="amazonratingfilter" onclick="filterRatingAbove4Amazon(this.id)">
                     <span class="vertical-align"> 
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
                         <img width="16" src="{% static 'image/x.svg' %}"   />
                         Amazon 4 star and above
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" id="goodreadsratingfilter" onclick="filterRatingAbove4Goodreads(this.id)">
+                <a href="#" class="hyperlink-filter" data-state="false" id="goodreadsratingfilter" onclick="filterRatingAbove4Goodreads(this.id)">
                     <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
                         <img width="16" src="{% static 'image/x.svg' %}"   />
                         Goodreads 4 star and above
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" id="kindleunlimitedfilter" onclick="filterKindleUnlimited(this.id)">
+                <a href="#" class="hyperlink-filter" data-state="false" id="kindleunlimitedfilter" onclick="filterKindleUnlimited(this.id)">
                     <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
                         <img width="16" src="{% static 'image/x.svg' %}"   />
                         Kindle Unlimited Available
                     </span>
                 </a>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" id="audiblefilter" onclick="filterAudible(this.id)">
+                <a href="#" class="hyperlink-filter"  data-state="false" id="audiblefilter" onclick="filterAudible(this.id)">
                     <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hide-image"  />
+                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
                         <img width="16" src="{% static 'image/x.svg' %}"   />
                         Audible Available
                     </span>

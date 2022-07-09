@@ -1,8 +1,22 @@
 function togglebutton(elementId) {
   var button = document.getElementById(elementId);
   var x = button.getElementsByTagName("img");
-  x[0].classList.toggle("hide-image");
-  x[1].classList.toggle("hide-image");
+  var state = button.dataset.state == "true";
+  button.dataset.state = (!state).toString();
+  x[0].classList.toggle("hidden-image");
+  x[1].classList.toggle("hidden-image");
+
+  filterElements = document.getElementsByClassName("hyperlink-filter");
+  state_of_filter = false;
+  for (var i = 0; i < filterElements.length; i++) {
+    state_of_filter =
+      state_of_filter | (filterElements.item(i).dataset.state == "true");
+  }
+  if (state_of_filter) {
+    document.getElementById("orderSelect").setAttribute("disabled", "disabled");
+  } else {
+    document.getElementById("orderSelect").removeAttribute("disabled");
+  }
 }
 
 function toggleElement(elementClass) {
