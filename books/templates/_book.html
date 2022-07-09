@@ -37,7 +37,20 @@
             </div>
             <div id="details" class="d-flex flex-column ml-4">
                 <div class="d-flex flex-row">
-                    <h4>{{book.name}}</h4>
+                    <h3>{{book.name}}</h3>
+                </div>
+                <div class="d-flex flex-row">
+                    
+                    {% if  book.has_kindle_unlimited %}
+                    <span class="badge badge-dark mr-2">
+                        Kindle Unlimited
+                    </span>
+                    {% endif %}
+                    {% if  book.has_audiobook %}
+                    <span class="badge badge-dark">
+                        Audible
+                    </span>
+                    {% endif %}
                 </div>
                 <!-- <div class="d-flex flex-row mt-2">
 					<span class="badge badge-dark">Psychic</span>
