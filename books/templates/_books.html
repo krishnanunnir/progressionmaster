@@ -1,9 +1,9 @@
 <div id="books">
 {% for book in books %}
-    <div class="{% if book.amazon_rating > 4%}amazon-rated-above-4 {% endif %}
-    {% if book.goodreads_rating > 4 %}goodreads-rated-above-4 {% endif %}
-    {% if book.has_kindle_unlimited %}has-kindle-unlimited {% endif %}
-    {% if book.has_audiobook %}has-audiobook {% endif %}">
+    <div class="{% if not book.amazon_rating > 4%}amazon-rated-above-4 {% endif %}
+    {% if not book.goodreads_rating > 4 %}goodreads-rated-above-4 {% endif %}
+    {% if not book.has_kindle_unlimited %}has-kindle-unlimited {% endif %}
+    {% if not book.has_audiobook %}has-audiobook {% endif %}">
         {% include "_book.html"%}
     </div>
 {% endfor %}
