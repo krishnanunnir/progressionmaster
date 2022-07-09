@@ -52,8 +52,6 @@ class BookAdmin(admin.ModelAdmin):
                 book.cover_image_url = book_dict["cover_image_url"]
             if not book.goodreads_rating:
                 book.goodreads_rating = rating
-            if not book.amazon_rating:
-                book.amazon_rating
             book.save()
 
     update_from_amazon.short_description = "Update from Amazon"
