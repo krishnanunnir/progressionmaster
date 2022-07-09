@@ -1,23 +1,32 @@
-.read-online-button{
-    border-radius: 0.2em;
-    background-color: #337AB7;
-    color: #FFFFFF;
-    padding: 0.5em;
-    border: 1px solid black;
+.read-online-button {
+  border-radius: 0.2em;
+  background-color: #337ab7;
+  color: #ffffff;
+  padding: 0.5em;
+  border: 1px solid black;
 }
 
-.amazon-button{
-    border-radius: 0.2em;
-    background-color: #FEBD69;
-    color: #333333;
-    padding: 0.5em;
-    border: 1px solid black;
+.amazon-button {
+  border-radius: 0.2em;
+  background-color: #febd69;
+  color: #333333;
+  padding: 0.5em;
+  border: 1px solid black;
 }
 
-.goodreads-button{
-    border-radius: 0.2em;
-    background-color: #F4F1EA;
-    color: #4B382A;
-    padding: 0.5em;
-    border: 1px solid black;
+.goodreads-button {
+  border-radius: 0.2em;
+  background-color: #f4f1ea;
+  color: #4b382a;
+  padding: 0.5em;
+  border: 1px solid black;
+}
+
+.name-series-hyperlink {
+  color: black;
+  text-decoration: underline;
+}
+
+.name-series-hyperlink:hover {
+  color: black;
 }
