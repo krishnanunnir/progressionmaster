@@ -1,0 +1,28 @@
+{% load static %}
+<div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+    {% if book.amazon_link %}
+        <a href="{{book.amazon_link}}" class="amazon-hyperlink">
+            <span class="amazon-button px-3">
+                <img width="16" src="{%static 'image/amazon.svg'%}">  {{book.amazon_rating}} <img width="16" src="{%static 'image/star-amazon.svg'%}">   | {{book.amazon_rating_count}}
+            </span>
+        </a>
+    {% endif %}
+</div>
+<div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+    {% if book.goodreads_link %}
+        <a href="{{book.goodreads_link}}" class="goodreads-hyperlink">
+            <span class="goodreads-button px-3">
+                <img width="16" src="{%static 'image/goodreads.svg'%}"> {{book.goodreads_rating}} <img width="16" src="{%static 'image/star-goodreads.svg'%}"> | {{book.goodreads_rating_count}}
+            </span>
+        </a>
+    {% endif %}
+</div>
+<div class="d-flex flex-row mt-4 justify-content-center align-items-center">
+    {% if book.read_online_link %}
+        <a href="{{book.read_online_link}}">
+            <span class="read-online-button px-5">
+                Read Online
+            </span>
+        </a>
+    {% endif %}
+</div>

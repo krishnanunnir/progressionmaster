@@ -2,11 +2,11 @@
 {% load static %}
 {% block headers %}
 	<link rel="stylesheet" href="{% static 'css/books.css'%}">
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
-        {% for book in books %}
-			{% include "_book.html"%}
-        {% endfor %}
+        {% include "_filter_nav.html"%}
+        {% include "_books.html"%}
     </div>
 {% endblock %}
