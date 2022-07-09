@@ -29,10 +29,16 @@ def parseAmazonDetails(url: string):
         rating_element = soup.find(
             "span", attrs={"class": "reviewCountTextLinkedHistogram"}
         )
-        rating = rating_element.attrs.get("title").strip().split(" ")[0]
+        rating = (
+            rating_element.get("title").strip().split(" ")[0]
+            if rating_element
+            else None
+        )
 
-        ratings_count_elment = soup.find("span", attrs={"id": "acrCustomerReviewText"})
-        ratings_count = ratings_count_elment.text.split(" ")[0]
+        ratings_count_element = soup.find("span", attrs={"id": "acrCustomerReviewText"})
+        ratings_count = (
+            ratings_count_element.text.split(" ")[0] if ratings_count_element else None
+        )
         has_kindle_unlimited = (
             True
             if soup.find("i", attrs={"class": "a-icon-kindle-unlimited"})
@@ -42,7 +48,7 @@ def parseAmazonDetails(url: string):
             True if soup.find("span", attrs={"class": "audible_mm_title"}) else False
         )
         cover_image_element = soup.find("img", attrs={"id": "ebooksImgBlkFront"})
-        cover_image_url = cover_image_element.attrs.get("src")
+        cover_image_url = cover_image_element.get("src")
 
         author_element = soup.find("a", attrs={"class": "contributorNameID"})
         author_string = author_element.string
@@ -78,14 +84,14 @@ def parseGoodreadsDetail(url: string):
         share_element = soup.find(
             "div", attrs={"data-react-class": "ReactComponents.ShareDialog"}
         )
-        book_props = json.loads(share_element.attrs.get("data-react-props"))[
+        book_props = json.loads(share_element.get("data-react-props", {})).get(
             "previewData"
-        ]
-        rating = book_props["rating"]
-        ratings_count = book_props["ratingsCount"]
+        )
+        rating = book_props.get("rating")
+        ratings_count = book_props.get("ratingsCount")
 
         amazon_link_element = soup.find("a", attrs={"id": "buyButton"})
-        amazon_link = amazon_link_element.attrs.get("href")
+        amazon_link = amazon_link_element.get("href")
     except Exception as ex:
         logger.error(f"Parsing the data failled for {url}")
         logger.exception("message")
@@ -114,19 +120,23 @@ def parseGoodreadsSeriesDetail(url: string, series):
         )
         for book_element in all_books_element:
 
-            series_props = book_element.attrs.get("data-react-props")
+            series_props = book_element.get("data-react-props")
             series_json_data = json.loads(series_props)
             for book_all_data in series_json_data["series"]:
+                if book.get("textReviewsCount", 0) == 0:
+                    continue
                 book = book_all_data["book"]
                 book_instance = {}
-                book_instance["name"] = book["title"]
-                book_instance["description"] = book["description"]["html"]
-                book_instance["author"] = book["author"]["name"]
-                book_instance["goodreads_rating"] = book["avgRating"]
+                book_instance["name"] = book.get("title")
+                book_instance["description"] = book.get("description", {}).get("html")
+                book_instance["author"] = book.get("author", {}).get("name")
+                book_instance["goodreads_rating"] = book.get("avgRating")
                 book_instance["series"] = series
-                book_instance[
-                    "goodreads_link"
-                ] = f"https://www.goodreads.com{book['bookUrl']}"
+                book_instance["goodreads_link"] = (
+                    f"https://www.goodreads.com{book.get('bookUrl','')}"
+                    if book.get("bookUrl")
+                    else None
+                )
                 books_list.append(book_instance)
 
     except Exception as ex:
