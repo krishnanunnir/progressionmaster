@@ -51,7 +51,6 @@ class BookAdmin(admin.ModelAdmin):
                     book.amazon_rating_count = book_dict["amazon_rating_count"]
                     book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
                     book.has_audiobook = book_dict["has_audiobook"]
-                    book.cover_image_url = book_dict["cover_image_url"]
                     book.save()
                     logger.info(f"Updated {book} from Amazon")
                 else:
@@ -104,7 +103,6 @@ class BookAdmin(admin.ModelAdmin):
                     book.amazon_rating_count = book_dict["amazon_rating_count"]
                     book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
                     book.has_audiobook = book_dict["has_audiobook"]
-                    book.cover_image_url = book_dict["cover_image_url"]
                 if rating:
                     book.goodreads_rating = rating
                     book.goodreads_rating_count = no_of_rating
