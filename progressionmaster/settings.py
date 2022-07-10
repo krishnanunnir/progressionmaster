@@ -138,7 +138,7 @@ LOGGING = {
             "level": "ERROR",
             "class": "logging.FileHandler",
             "filename": "./log/debug.log",
-            "formatters": "simple",
+            "formatter": "simple",
         },
         "console": {
             "level": "INFO",
