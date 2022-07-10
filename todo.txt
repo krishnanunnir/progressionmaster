@@ -3,7 +3,16 @@
 3. add search - not implementing
 4. add title - x
 5. add serializer to share build bot
+6. add about
+7. book suggestion
+8. newsletter collection
+9. create bot
+10. make filters collapsible, so they aren't caught up in it - might be possible to use bootstrap select - x
+11. Open in new window - amazon goodreads
 
 Future
 1. avoid duplicate entries
 2. periodic task to update the entries
+
+notes
+1. when adding the data in production, add data for which filters has impact as the first entry
