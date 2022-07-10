@@ -1,6 +1,6 @@
 {% load static %}
 <div class="row mb-2">
-    <div class="col-md-10 offset-md-1 mt-5">
+    <div class="col-md-8 offset-md-2 mt-5">
         <div class="d-flex flex-row justify-content-between">
             <div class="d-flex flex-column">
 
@@ -11,41 +11,54 @@
                 </select>
             </div>
             <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" data-state="false" id="amazonratingfilter" onclick="filterRatingAbove4Amazon(this.id)">
-                    <span class="vertical-align"> 
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
-                        <img width="16" src="{% static 'image/x.svg' %}"   />
-                        Amazon 4 star and above
-                    </span>
-                </a>
-            </div>
-            <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" data-state="false" id="goodreadsratingfilter" onclick="filterRatingAbove4Goodreads(this.id)">
-                    <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
-                        <img width="16" src="{% static 'image/x.svg' %}"   />
-                        Goodreads 4 star and above
-                    </span>
-                </a>
-            </div>
-            <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter" data-state="false" id="kindleunlimitedfilter" onclick="filterKindleUnlimited(this.id)">
-                    <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
-                        <img width="16" src="{% static 'image/x.svg' %}"   />
-                        Kindle Unlimited Available
-                    </span>
-                </a>
-            </div>
-            <div class="d-flex flex-column">
-                <a href="#" class="hyperlink-filter"  data-state="false" id="audiblefilter" onclick="filterAudible(this.id)">
-                    <span class="vertical-align">
-                        <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
-                        <img width="16" src="{% static 'image/x.svg' %}"   />
-                        Audible Available
-                    </span>
-                </a>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter  <img width="16" src="{% static 'image/filter.svg' %}"   />
+                    </button>
+
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a href="#" class="hyperlink-filter dropdown-item" data-state="false" id="amazonratingfilter" onclick="filterRatingAbove4Amazon(this.id)">
+                            <span class="vertical-align">
+                                <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
+                                <img width="16" src="{% static 'image/x.svg' %}"   />
+                                Amazon 4 star and above
+                            </span>
+                        </a>
+
+                        <a href="#" class="hyperlink-filter dropdown-item" data-state="false" id="goodreadsratingfilter" onclick="filterRatingAbove4Goodreads(this.id)">
+                            <span class="vertical-align">
+                                <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
+                                <img width="16" src="{% static 'image/x.svg' %}"   />
+                                Goodreads 4 star and above
+                            </span>
+                        </a>
+
+
+                        <a href="#" class="hyperlink-filter dropdown-item" data-state="false" id="kindleunlimitedfilter" onclick="filterKindleUnlimited(this.id)">
+                            <span class="vertical-align">
+                                <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
+                                <img width="16" src="{% static 'image/x.svg' %}"   />
+                                Kindle Unlimited Available
+                            </span>
+                        </a>
+
+
+                        <a href="#" class="hyperlink-filter dropdown-item"  data-state="false" id="audiblefilter" onclick="filterAudible(this.id)">
+                            <span class="vertical-align">
+                                <img width="16" src="{% static 'image/check.svg' %}" class="hidden-image"  />
+                                <img width="16" src="{% static 'image/x.svg' %}"   />
+                                Audible Available
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
