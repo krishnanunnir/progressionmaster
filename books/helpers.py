@@ -1,4 +1,5 @@
 import string
+import time
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -16,6 +17,7 @@ def parseAmazonDetails(url: string):
 
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")
+    time.sleep(3)
     try:
         title_element = soup.find("span", attrs={"id": "productTitle"})
         title = title_element.string.strip().replace(",", "") if title_element else None
