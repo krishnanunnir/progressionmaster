@@ -45,8 +45,7 @@ class BookAdmin(admin.ModelAdmin):
                 else:
                     logger.info("Nothing to write")
             except Exception as ex:
-                logger.error(f"Couldn't log details for {book.name}")
-                logger.exception()
+                logger.exception(f"Couldn't log details for {book.name}")
 
     def update_from_goodreads(self, request, queryset):
         for book in queryset:
@@ -70,8 +69,7 @@ class BookAdmin(admin.ModelAdmin):
                 book.save()
                 logger.info(f"Updated {book} from goodreads")
             except Exception as ex:
-                logger.error(f"Couldn't log details for {book.name}")
-                logger.exception()
+                logger.exception(f"Couldn't log details for {book.name}")
 
     def fill_max_data(self, request, queryset):
         for book in queryset:
@@ -99,8 +97,7 @@ class BookAdmin(admin.ModelAdmin):
                 book.save()
                 logger.info(f"Updated {book} with max data")
             except Exception:
-                logger.error(f"Couldn't log details for {book.name}")
-                logger.exception()
+                logger.exception(f"Couldn't log details for {book.name}")
 
     update_from_amazon.short_description = "Update from Amazon"
     update_from_goodreads.short_description = "Update from goodreads"
