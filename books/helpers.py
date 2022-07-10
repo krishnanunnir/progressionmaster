@@ -98,6 +98,8 @@ def parseGoodreadsDetail(url: string):
             else None
         )
 
+        image_url = book_props.get("imageUrl")
+
         amazon_link_element = soup.find("a", attrs={"id": "buyButton"})
         amazon_link = amazon_link_element.get("href")
     except Exception as ex:
@@ -108,6 +110,7 @@ def parseGoodreadsDetail(url: string):
         rating,
         ratings_count,
         book_number,
+        image_url,
         f"https://www.goodreads.com{amazon_link}",
     )
 
@@ -145,6 +148,7 @@ def parseGoodreadsSeriesDetail(url: string, series):
                     if book.get("bookUrl")
                     else None
                 )
+                book_instance["cover_image_url"] = book.get("imageUrl")
                 book_instance["goodreads_rating_count"] = book.get("ratingsCount", None)
                 books_list.append(book_instance)
 

@@ -56,6 +56,7 @@ class BookAdmin(admin.ModelAdmin):
                         rating,
                         no_of_rating,
                         book_number,
+                        image_url,
                         amazon_link,
                     ) = parseGoodreadsDetail(book.goodreads_link)
                 if amazon_link:
@@ -66,6 +67,7 @@ class BookAdmin(admin.ModelAdmin):
                     book.book_number = book_number
                 if no_of_rating:
                     book.goodreads_rating_count = no_of_rating
+                book.cover_image_url = image_url
                 book.save()
                 logger.info(f"Updated {book} from goodreads")
             except Exception as ex:
@@ -80,6 +82,7 @@ class BookAdmin(admin.ModelAdmin):
                         rating,
                         no_of_rating,
                         book_number,
+                        image_url,
                         amazon_link,
                     ) = parseGoodreadsDetail(book.goodreads_link)
                 if amazon_link:
@@ -94,6 +97,7 @@ class BookAdmin(admin.ModelAdmin):
                     book.goodreads_rating = rating
                     book.goodreads_rating_count = no_of_rating
                 book.book_number = book_number
+                book.cover_image_url = image_url
                 book.save()
                 logger.info(f"Updated {book} with max data")
             except Exception:
