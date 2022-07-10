@@ -4,16 +4,15 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import logging
+from constance import config
+import ast
 
 logger = logging.getLogger(__name__)
 
 
 def parseAmazonDetails(url: string):
 
-    HEADERS = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
-        "Accept-Language": "en-US, en;q=0.5",
-    }
+    HEADERS = ast.literal_eval(config.AMAZON_HEADERS)
 
     webpage = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(webpage.content, "lxml")

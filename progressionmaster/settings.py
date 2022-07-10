@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "constance.backends.database",
+    "constance",
     "books",
 ]
 
@@ -152,4 +154,13 @@ LOGGING = {
             "propagate": True,
         },
     },
+}
+
+CONSTANCE_BACKEND = "constance.backends.database.DatabaseBackend"
+
+CONSTANCE_CONFIG = {
+    "AMAZON_HEADERS": (
+        "",
+        "a json string which is header for amazon request",
+    ),
 }
