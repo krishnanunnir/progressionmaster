@@ -31,58 +31,76 @@ class BookAdmin(admin.ModelAdmin):
 
     def update_from_amazon(self, request, queryset):
         for book in queryset:
-            book_dict = parseAmazonDetails(book.amazon_link)
-            if book_dict:
-                book.amazon_link = book_dict["amazon_link"]
-                book.amazon_rating = book_dict["amazon_rating"]
-                book.amazon_rating_count = book_dict["amazon_rating_count"]
-                book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
-                book.has_audiobook = book_dict["has_audiobook"]
-                book.cover_image_url = book_dict["cover_image_url"]
-                book.save()
-                logger.info(f"Updated {book} from Amazon")
-            else:
-                logger.info("Nothing to write")
+            try:
+                book_dict = parseAmazonDetails(book.amazon_link)
+                if book_dict:
+                    book.amazon_link = book_dict["amazon_link"]
+                    book.amazon_rating = book_dict["amazon_rating"]
+                    book.amazon_rating_count = book_dict["amazon_rating_count"]
+                    book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
+                    book.has_audiobook = book_dict["has_audiobook"]
+                    book.cover_image_url = book_dict["cover_image_url"]
+                    book.save()
+                    logger.info(f"Updated {book} from Amazon")
+                else:
+                    logger.info("Nothing to write")
+            except Exception as ex:
+                logger.error(f"Couldn't log details for {book.name}")
+                logger.exception()
 
     def update_from_goodreads(self, request, queryset):
         for book in queryset:
             amazon_link = None
-            if book.goodreads_link:
-                rating, no_of_rating, book_number, amazon_link = parseGoodreadsDetail(
-                    book.goodreads_link
-                )
-            if amazon_link:
-                book.amazon_link = amazon_link
-            if rating:
-                book.goodreads_rating = rating
-            if book_number:
-                book.book_number = book_number
-            if no_of_rating:
-                book.goodreads_rating_count = no_of_rating
-            book.save()
-            logger.info(f"Updated {book} from goodreads")
+            try:
+                if book.goodreads_link:
+                    (
+                        rating,
+                        no_of_rating,
+                        book_number,
+                        amazon_link,
+                    ) = parseGoodreadsDetail(book.goodreads_link)
+                if amazon_link:
+                    book.amazon_link = amazon_link
+                if rating:
+                    book.goodreads_rating = rating
+                if book_number:
+                    book.book_number = book_number
+                if no_of_rating:
+                    book.goodreads_rating_count = no_of_rating
+                book.save()
+                logger.info(f"Updated {book} from goodreads")
+            except Exception as ex:
+                logger.error(f"Couldn't log details for {book.name}")
+                logger.exception()
 
     def fill_max_data(self, request, queryset):
         for book in queryset:
             amazon_link = None
-            if book.goodreads_link:
-                rating, no_of_rating, book_number, amazon_link = parseGoodreadsDetail(
-                    book.goodreads_link
-                )
-            if amazon_link:
-                book_dict = parseAmazonDetails(amazon_link)
-                book.amazon_link = book_dict["amazon_link"]
-                book.amazon_rating = book_dict["amazon_rating"]
-                book.amazon_rating_count = book_dict["amazon_rating_count"]
-                book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
-                book.has_audiobook = book_dict["has_audiobook"]
-                book.cover_image_url = book_dict["cover_image_url"]
-            if rating:
-                book.goodreads_rating = rating
-                book.goodreads_rating_count = no_of_rating
-            book.book_number = book_number
-            book.save()
-            logger.info(f"Updated {book} with max data")
+            try:
+                if book.goodreads_link:
+                    (
+                        rating,
+                        no_of_rating,
+                        book_number,
+                        amazon_link,
+                    ) = parseGoodreadsDetail(book.goodreads_link)
+                if amazon_link:
+                    book_dict = parseAmazonDetails(amazon_link)
+                    book.amazon_link = book_dict["amazon_link"]
+                    book.amazon_rating = book_dict["amazon_rating"]
+                    book.amazon_rating_count = book_dict["amazon_rating_count"]
+                    book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
+                    book.has_audiobook = book_dict["has_audiobook"]
+                    book.cover_image_url = book_dict["cover_image_url"]
+                if rating:
+                    book.goodreads_rating = rating
+                    book.goodreads_rating_count = no_of_rating
+                book.book_number = book_number
+                book.save()
+                logger.info(f"Updated {book} with max data")
+            except Exception:
+                logger.error(f"Couldn't log details for {book.name}")
+                logger.exception()
 
     update_from_amazon.short_description = "Update from Amazon"
     update_from_goodreads.short_description = "Update from goodreads"
