@@ -10,11 +10,23 @@ import logging
 logger = logging.getLogger(__name__)
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
-    def has_goodreads_link(self, instance):
-        return True if instance.goodreads_link else False
+    def is_goodreads_parsed(self, instance):
+        return (
+            True
+            if instance.goodreads_link
+            and instance.goodreads_rating
+            and instance.goodreads_rating_count
+            else False
+        )
 
-    def has_amazon_link(self, instance):
-        return True if instance.amazon_link else False
+    def is_amazon_parsed(self, instance):
+        return (
+            True
+            if instance.amazon_link
+            and instance.amazon_rating
+            and instance.amazon_rating_count
+            else False
+        )
 
     def can_be_public(self, instance):
         if all(
@@ -106,11 +118,11 @@ class BookAdmin(admin.ModelAdmin):
     update_from_amazon.short_description = "Update from Amazon"
     update_from_goodreads.short_description = "Update from goodreads"
     fill_max_data.short_description = "Fill max data"
-    has_goodreads_link.boolean = True
-    has_amazon_link.boolean = True
+    is_goodreads_parsed.boolean = True
+    is_amazon_parsed.boolean = True
     can_be_public.boolean = True
 
-    list_display = ("name", "has_goodreads_link", "has_amazon_link", "can_be_public")
+    list_display = ("name", "is_goodreads_parsed", "is_amazon_parsed", "can_be_public")
 
     actions = ["update_from_amazon", "update_from_goodreads", "fill_max_data"]
 
