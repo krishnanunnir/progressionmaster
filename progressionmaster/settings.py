@@ -127,11 +127,18 @@ MEDIA_URL = "/media/"
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "{levelname} {asctime} {message}",
+            "style": "{",
+        },
+    },
     "handlers": {
         "file": {
             "level": "ERROR",
             "class": "logging.FileHandler",
             "filename": "./log/debug.log",
+            "formatters": "simple",
         },
         "console": {
             "level": "INFO",
