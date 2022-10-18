@@ -104,8 +104,8 @@ class BookAdmin(admin.ModelAdmin):
                     book.amazon_rating_count = book_dict["amazon_rating_count"]
                     book.has_kindle_unlimited = book_dict["has_kindle_unlimited"]
                     book.has_audiobook = book_dict["has_audiobook"]
-                    book.cover_image_url = book_dict["cover_image_url"]
                 if rating:
+                    book.cover_image_url = image_url
                     book.goodreads_rating = rating
                     book.goodreads_rating_count = no_of_rating
                 book.book_number = book_number
