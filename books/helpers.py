@@ -1,11 +1,12 @@
-import string
-import time
-from bs4 import BeautifulSoup
-import requests
+import ast
 import json
 import logging
+import string
+import time
+
+import requests
+from bs4 import BeautifulSoup
 from constance import config
-import ast
 
 logger = logging.getLogger(__name__)
 
@@ -149,7 +150,10 @@ def parseGoodreadsSeriesDetail(url: string, series):
                     if book.get("bookUrl")
                     else None
                 )
-                book_instance["cover_image_url"] = book.get("imageUrl")
+                cover_image = book.get("imageUrl")
+                url_array = cover_image.split(".")
+                del url_array[-2]
+                book_instance["cover_image_url"] = ".".join(url_array)
                 book_instance["goodreads_rating_count"] = book.get("ratingsCount", None)
                 books_list.append(book_instance)
 
